@@ -1,0 +1,10 @@
+INSERT INTO vehicle (vin, license_plate, driver, model, type) VALUES('12345678912345678', 'KA12BD7823', 'Rahul Kumar', 'Tata Nano', 'Hatchback');
+INSERT INTO vehicle (vin, license_plate, driver, model, type) VALUES('12344862397345673', 'KA15YN7823', 'Deepak Joshi', 'Maruti Swift Dzire', 'Sedan');
+INSERT INTO vehicle (vin, license_plate, driver, model, type) VALUES('41654199297345675', 'KA63PG3681', 'John S.', 'Hyundai Accent', 'Sedan');
+INSERT INTO vehicle (vin, license_plate, driver, model, type) VALUES('41654199297345679', 'KA94HB6713', 'Ishan Tyagi', 'Mahindra Scorpio', 'SUV');
+INSERT INTO vehicle (vin, license_plate, driver, model, type) VALUES('98716931387431697', 'KA13JP2829', 'M. Dixit', 'Hyundai Elite', 'Hatchback');
+INSERT INTO vehicle (vin, license_plate, driver, model, type) VALUES('32164894198433952', 'KA64YB2973', 'Mohd. Amir', 'Kia Carnival', 'SUV');
+INSERT INTO vehicle (vin, license_plate, driver, model, type) VALUES('87465413196846116', 'KA64YB2486', 'Abdul Sharif', 'Toyota Corolla', 'Sedan');
+INSERT INTO vehicle (vin, license_plate, driver, model, type) VALUES('74149874641316844', 'KA03BP4797', 'Sachin D.', 'Maruti Swift Dzire', 'Sedan');
+INSERT INTO vehicle (vin, license_plate, driver, model, type) VALUES('74134941132143712', 'KA92MA5495', 'Vishal Singh', 'Hyundai Accent', 'Sedan');
+INSERT INTO vehicle (vin, license_plate, driver, model, type) VALUES('54327932973250721', 'KA73MB2943', 'Anmol J.', 'Hyundai Elite', 'Hatchback');

@@ -1,0 +1,45 @@
+{
+  "policyId": "com.fleetman:policy",
+  "definition": "com.fleetman:vehicle:1.0.0",
+  "attributes": {
+    "license_plate": "KA73MB2943"
+  },
+  "features": {
+    "environment": {
+      "properties": {
+        "humidity": 60,
+        "temp": 20
+      }
+    },
+    "fuel": {
+      "properties": {
+        "type": "Leaded",
+        "capacity": 70 ,
+        "level": 78.6 ,
+        "rating": "A"
+      }
+    },
+    "engine": {
+      "properties": {
+        "temp": 120,
+        "battery_capacity": 60 ,
+        "current_level": 5
+      }
+    },
+    "tyres":  {
+      "properties": {
+        "pressure": 40,
+        "wear": 20.5,
+        "rating": "B",
+        "temp": 35
+      }
+    },
+    "brakes": {
+      "properties": {
+        "type": "CarbonCeramic",
+        "temp": 200,
+        "fluid_level": 48.5
+      }
+    }
+  }
+}
