@@ -5,7 +5,7 @@ from passlib.hash import argon2
 
 from app import app, db
 from app.ditto import fetch_twin_by_vin, fetch_twin_by_license_plate
-from app.errors import bad_request_error, unauthorized_error, not_found_error
+from app.errors import bad_request_error, unauthorized_error, not_found_error, request_timeout_error
 from app.models import User, Vehicle
 from app.util import extract_twin_data
 
@@ -90,7 +90,10 @@ def get_vehicle():
         twin_data = fetch_twin_by_license_plate(license_plate)
 
     if isinstance(twin_data, str):
-        return not_found_error(twin_data)
+        if twin_data.startswith('Cannot'):
+            return request_timeout_error(twin_data)
+        else:
+            return not_found_error(twin_data)
 
     user: User = User.query.filter_by(email_id=email_id).first()
 

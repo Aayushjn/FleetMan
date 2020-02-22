@@ -19,11 +19,14 @@ def fetch_twin_by_vin(vin: str) -> Union[dict, str]:
     :param vin: Vehicle Identification Number (thingId of the twin)
     :return: returns error string if GET request fails, otherwise dict of twin's features
     """
-    response = requests.get(f'{DITTO_BASE_URL}things/{DITTO_NAMESPACE}:{vin}/features',
-                            auth=(DITTO_USERNAME, DITTO_PASSWORD))
-    if response.status_code == 404:
-        return f'Twin for vehicle with VIN: {vin} does not exist!'
-    return response.json()
+    url: str = f'{DITTO_BASE_URL}things/{DITTO_NAMESPACE}:{vin}/features'
+    try:
+        response = requests.get(url, auth=(DITTO_USERNAME, DITTO_PASSWORD))
+        if response.status_code == 404:
+            return f'Twin for vehicle with VIN: {vin} does not exist!'
+        return response.json()
+    except requests.exceptions.ConnectionError:
+        return f'Cannot establish connection to {url}! The Ditto server may be down'
 
 
 def fetch_twin_by_license_plate(license_plate: str) -> Union[dict, str]:
@@ -33,8 +36,11 @@ def fetch_twin_by_license_plate(license_plate: str) -> Union[dict, str]:
     :param license_plate: License plate number of the vehicle (stored as static attribute in the twin)
     :return: returns error string if GET request fails or no matching twin found, otherwise dict of twin's features
     """
-    response = requests.get(f'{DITTO_BASE_URL}search/things/?filter=eq(attributes/license_plate,"{license_plate}")',
-                            auth=(DITTO_USERNAME, DITTO_PASSWORD))
-    if response.status_code != 200 or len(response.json()['items']) == 0:
-        return f'Twin for vehicle with license plate: {license_plate} does not exist!'
-    return response.json()['items'][0]['features']
+    url = f'{DITTO_BASE_URL}search/things/?filter=eq(attributes/license_plate,"{license_plate}")'
+    try:
+        response = requests.get(url, auth=(DITTO_USERNAME, DITTO_PASSWORD))
+        if response.status_code != 200 or len(response.json()['items']) == 0:
+            return f'Twin for vehicle with license plate: {license_plate} does not exist!'
+        return response.json()['items'][0]['features']
+    except requests.exceptions.ConnectionError:
+        return f'Cannot establish connection to {url}! The Ditto server may be down'
