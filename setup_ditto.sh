@@ -1,6 +1,3 @@
-# Start Ditto
-#docker-compose -f ~/Desktop/College/4th\ Year/Major\ Project/ditto/deployment/docker/docker-compose.yml up -d
-
 # Create policy
 http -a fleetman-dev:fleetman PUT http://localhost:8080/api/2/policies/com.fleetman:policy < ditto/policy/policy.json
 
