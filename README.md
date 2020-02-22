@@ -30,6 +30,10 @@ Ensure that **Docker** and **Docker Compose** are installed on your system.
 Clone into the Eclipse Ditto repo with `git clone https://github.com/eclipse/ditto.git`. Run the Ditto container with 
 `docker-compose -f <path/to/ditto/repo>/deployment/docker/docker-compose.yml up -d`.
 
+Before running the container, a new username and password must be registered with Nginx. To do that, run the following:
+`openssl passwd -quiet` for the password _fleetman_. Open `<path/to/ditto/repo>/deployment/docker/nginx.htpasswd` and append the line 
+`fleetman-dev:<output of command>`.
+
 The initial policies and twins can be set up by running [`./setup_ditto.sh`](setup_ditto.sh). It requires 
 [HTTPie](https://httpie.org/doc#installation).
  
