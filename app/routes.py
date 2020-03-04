@@ -7,7 +7,7 @@ from app import app, db
 from app.ditto import fetch_twin_by_vin, fetch_twin_by_license_plate
 from app.errors import bad_request_error, unauthorized_error, not_found_error, request_timeout_error
 from app.models import User, Vehicle
-from app.util import extract_twin_data
+from app.util import map_vehicle_data_to_role
 
 
 @app.route('/users/create', methods=['PUT'])
@@ -97,53 +97,25 @@ def get_vehicle():
 
     user: User = User.query.filter_by(email_id=email_id).first()
 
-    twin_system_data = extract_twin_data(twin_data)
-    vehicle.calculate_health(twin_system_data)
+    return map_vehicle_data_to_role(user.role, twin_data, vehicle), 200
 
-    twin_system_data['brakes']['health'] = vehicle.brakes_health
-    twin_system_data['engine']['health'] = vehicle.engine_health
-    twin_system_data['fuel']['health'] = vehicle.fuel_health
-    twin_system_data['tyres']['health'] = vehicle.tyres_health
 
-    if user.role == 'INSURANCE':
-        return {
-                   "brakes": None,
-                   "driver": None,
-                   "engine": None,
-                   "fuel": None,
-                   "license_plate": vehicle.license_plate,
-                   "model": vehicle.model,
-                   "overall_health": None,
-                   "type": None,
-                   "tyres": None,
-                   "vin": vehicle.vin
-               }, 200
-    elif user.role == 'ADMIN':
-        return {
-                   **vehicle.to_dict(),
-                   **twin_system_data
-               }, 200
-    elif user.role == 'MAINTENANCE':
-        ret_val = {
-            **vehicle.to_dict(),
-            **twin_system_data
-        }
-        ret_val['vin'] = None
-        ret_val['license_plate'] = None
-        ret_val['driver'] = None
-        ret_val['type'] = None
+@app.route('/vehicles/count', methods=['GET'])
+def get_vehicle_count():
+    hatchback_count, sedan_count, suv_count = 0, 0, 0
 
-        return ret_val, 200
-    else:
-        return {
-                   "brakes": None,
-                   "driver": None,
-                   "engine": None,
-                   "fuel": None,
-                   "license_plate": None,
-                   "model": None,
-                   "overall_health": None,
-                   "type": None,
-                   "tyres": None,
-                   "vin": None
-               }, 200
+    vehicles: List[Vehicle] = Vehicle.query.all()
+
+    for v in vehicles:
+        if v.type == 'Hatchback':
+            hatchback_count += 1
+        elif v.type == 'Sedan':
+            sedan_count += 1
+        else:
+            suv_count += 1
+
+    return {
+               'hatchbacks': hatchback_count,
+               'sedans': sedan_count,
+               'suvs': suv_count
+           }, 200
