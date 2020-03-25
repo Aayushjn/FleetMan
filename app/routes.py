@@ -5,7 +5,7 @@ from passlib.hash import argon2
 
 from app import app, db
 from app.ditto import fetch_twin_by_vin, fetch_twin_by_license_plate
-from app.errors import bad_request_error, unauthorized_error, not_found_error, request_timeout_error, conflict_error
+from app.errors import bad_request_error, unauthorized_error, not_found_error, request_timeout_error
 from app.models import User, Vehicle, FirebaseToken
 from app.util import map_vehicle_data_to_role
 
@@ -60,9 +60,6 @@ def logout_user() -> Tuple[dict, int]:
 
     user: User = User.query.filter_by(email_id=email_id).first()
     if user is not None:
-        if not user.logged_in:
-            return conflict_error('User not logged in')
-
         user.logged_in = False
         db.session.commit()
         return {}, 204
@@ -153,11 +150,11 @@ def register_token() -> Tuple[dict, int]:
     if token is None or id is None:
         return bad_request_error('Request parameters are missing!')
 
-    firebase_token: FirebaseToken = FirebaseToken.query.filter_by(email_id=email_id).first()
+    firebase_token: FirebaseToken = FirebaseToken.query.filter_by(user_email=email_id).first()
     if firebase_token is not None:
         firebase_token.token = token
     else:
-        firebase_token: FirebaseToken = FirebaseToken(email_id=email_id, token=token)
+        firebase_token: FirebaseToken = FirebaseToken(user_email=email_id, token=token)
         db.session.add(firebase_token)
     db.session.commit()
 
