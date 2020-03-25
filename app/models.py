@@ -1,11 +1,25 @@
 from app import db
 
 
+class FirebaseToken(db.Model):
+    __tablename__ = 'firebase_token'
+    id = db.Column(db.Integer, primary_key=True)    # auto-increments by default
+    token = db.Column(db.String(256))
+    user_email = db.Column(db.String(254), db.ForeignKey('user.email_id'))
+    user = db.relationship('User', back_populates='firebase_token')
+
+    def __repr__(self) -> str:
+        return f'FirebaseToken(id={self.id}, token={self.token})'
+
+
 class User(db.Model):
+    __tablename__ = 'user'
     email_id = db.Column(db.String(254), primary_key=True)
     name = db.Column(db.String(70), nullable=False)
     password = db.Column(db.String(80), nullable=False)
     role = db.Column(db.String(11), nullable=False)
+    logged_in = db.Column(db.Boolean())
+    firebase_token = db.relationship('FirebaseToken', uselist=False, back_populates='user')
 
     def __repr__(self) -> str:
         return f'User(email_id={self.email_id}, name={self.name}, role={self.role})'
@@ -19,6 +33,7 @@ class User(db.Model):
 
 
 class Vehicle(db.Model):
+    __tablename__ = 'vehicle'
     vin = db.Column(db.String(17), primary_key=True)
     license_plate = db.Column(db.String(11), unique=True, nullable=False)
     driver = db.Column(db.String(70), nullable=False)
