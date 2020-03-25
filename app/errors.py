@@ -29,3 +29,10 @@ def request_timeout_error(error: str) -> Tuple[dict, int]:
     return {
                'message': error
            }, 408
+
+
+@app.errorhandler(409)
+def conflict_error(error: str) -> Tuple[dict, int]:
+    return {
+               'message': error
+           }, 409
