@@ -2,6 +2,8 @@
 
 API server for a fleet management system aided by digital twins
 
+The companion Android app's source code is available [here](https://github.com/Aayushjn/FleetMan-Android).
+
 ___
 #### Setup
 Clone this repo `git clone https://github.com/Aayushjn/FleetMan.git`.
