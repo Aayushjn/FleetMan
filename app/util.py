@@ -1,3 +1,5 @@
+from typing import Tuple, Optional
+
 from app.models import Vehicle
 
 
@@ -62,3 +64,40 @@ def map_vehicle_data_to_role(role: str, twin_data: dict, vehicle: Vehicle) -> di
             "tyres": None,
             "vin": None
         }
+
+
+def get_alert_type_and_msg(delta_brakes: float,
+                           delta_engine: float,
+                           delta_fuel: float,
+                           delta_tyre: float,
+                           delta_overall: float) -> Tuple[Optional[str], Optional[str]]:
+    if 5 <= delta_overall < 10 or \
+            5 <= delta_brakes < 10 or \
+            5 <= delta_engine < 10 or \
+            5 <= delta_fuel < 10 or \
+            5 <= delta_tyre < 10:
+        alert_type = 'WARNING'
+    elif delta_overall >= 10 or \
+            delta_brakes >= 10 or \
+            delta_engine >= 10 or \
+            delta_fuel >= 10 or \
+            delta_tyre >= 10:
+        alert_type = 'SEVERE'
+    else:
+        return None, None
+
+    warning_msg = 'Issues identified with: '
+    if delta_brakes >= 5:
+        warning_msg = warning_msg + 'Braking system, '
+    if delta_engine >= 5:
+        warning_msg = warning_msg + 'Engine and Transmission, '
+    if delta_fuel >= 5:
+        warning_msg = warning_msg + 'Fuel system, '
+    if delta_tyre >= 5:
+        warning_msg = warning_msg + 'Tyre system, '
+    if delta_overall >= 5:
+        warning_msg = warning_msg + 'Overall health'
+    else:
+        warning_msg = warning_msg[:-2]
+
+    return alert_type, warning_msg

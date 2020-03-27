@@ -41,14 +41,6 @@ H
 cars.sql,4/b/4b1d6d84c80f086513296c74e8fd5434a946b52c
 =
 app/routes.py,e/a/eac19fe430d88e680a9135145e040348a3a91b1c
-X
-(app/migrations/versions/5d9e29c73dad_.py,f/4/f459dafe623f1af6b14eefbfff8103f4646a3cb1
-X
-(app/migrations/versions/50c9874381fb_.py,7/2/72abfabb41c229c37ef62fdd708467cbf04f467b
-X
-(app/migrations/versions/892e9f26b779_.py,b/2/b239975489b3fd974506f7684e9d86e7ac2730dc
-X
-(app/migrations/versions/cd565534c626_.py,6/5/65b43197b8822e8405e336ac561e4aeee6869470
 J
 app/migrations/alembic.ini,a/c/ace7d70b18eaa569661510b4000e95069c7afafb
 E
@@ -70,3 +62,7 @@ M
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
 9
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+C
+logs/api_server.log,7/f/7f1da170feae86207a9911b1f281c2defd17f58b
+X
+(app/migrations/versions/37f6816beff3_.py,c/1/c1b98b97192341afe9cbbcbb9ccbbd5e00647468
